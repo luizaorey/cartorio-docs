@@ -487,7 +487,7 @@
             <td class="mono">RC-001</td>
             <td>Certidão de Nascimento · 2ª Via</td>
             <td>Eletrônico</td>
-            <td class="valor-col" id="valor-certidao">89,90</td>
+           <td class="valor-col" id="valor-certidao">--</td>
           </tr>
           <tr>
             <td class="mono">SV-002</td>
@@ -500,12 +500,14 @@
       <div class="total-box">
         <div class="total-inner">
           <span class="total-label">Total a Pagar</span>
-          <span class="total-valor">R$ <span id="total">89,90</span></span>
+          <span class="total-valor">R$ <span id="total">--</span></span>
         </div>
       </div>
     </div>
 
     <!-- VENCIMENTO -->
+    set('valor-certidao', params.get('valor') || '0,00');
+set('total', params.get('valor') || '0,00');
     <div class="vencimento-box">
       <div class="icon">📅</div>
       <div class="venc-info">
