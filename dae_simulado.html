@@ -3,599 +3,678 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DAE - Documento de Arrecadação Estadual</title>
+<title>DAE — Cartório de Candeias</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Source+Sans+3:wght@400;600;700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;600;700&family=IBM+Plex+Mono:wght@400;600&family=Inter:wght@400;500;600&display=swap');
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --gold:    #C9A84C;
+    --dark:    #1A2340;
+    --gray:    #666;
+    --lgray:   #EEEEEE;
+    --light:   #F5F5F0;
+    --red:     #CC3333;
+    --pix:     #32BCAD;
+    --pix-lt:  #E8F8F6;
+    --pix-dk:  #1A7A6E;
+  }
 
   body {
-    font-family: 'Source Sans 3', sans-serif;
-    background: #f0f0f0;
+    font-family: 'Inter', sans-serif;
+    background: #e8e4dc;
     display: flex;
     justify-content: center;
-    padding: 20px;
+    padding: 24px;
+    color: var(--dark);
+    font-size: 13px;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
   }
 
-  .documento {
-    width: 794px;
+  .page {
     background: white;
-    border: 1px solid #ccc;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    width: 794px;
+    padding: 24px 28px;
+    box-shadow: 0 4px 40px rgba(0,0,0,0.18);
   }
 
-  /* ── CABEÇALHO ── */
-  .cabecalho {
-    background: #1a3a6b;
-    color: white;
-    padding: 0;
+  /* ── Cabeçalho ── */
+  .header {
     display: flex;
-    align-items: stretch;
-  }
-
-  .cabecalho-brasao {
-    background: #0f2447;
-    width: 100px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 48px;
-    flex-shrink: 0;
-  }
-
-  .cabecalho-info {
-    flex: 1;
-    padding: 14px 20px;
-  }
-
-  .cabecalho-info .orgao {
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    opacity: 0.8;
+    justify-content: space-between;
+    align-items: flex-start;
     margin-bottom: 2px;
   }
-
-  .cabecalho-info .titulo {
-    font-size: 20px;
+  .header-title {
+    font-family: 'Source Serif 4', serif;
+    font-size: 18px;
     font-weight: 700;
+    color: var(--dark);
+  }
+  .header-sub {
+    font-size: 11px;
+    color: var(--gray);
+    margin-top: 2px;
+  }
+  .protocolo-box { text-align: right; }
+  .protocolo-label { font-size: 9px; color: var(--gray); letter-spacing: 1px; text-transform: uppercase; }
+  .protocolo-value {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--gold);
+  }
+
+  .gold-bar { height: 3px; background: var(--gold); margin: 8px 0; }
+
+  .meta-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11px;
+    color: var(--gray);
+    margin-bottom: 8px;
+  }
+  .badge-sim {
+    background: var(--red);
+    color: white;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 10px;
+    border-radius: 2px;
     letter-spacing: 0.5px;
   }
 
-  .cabecalho-info .subtitulo {
-    font-size: 12px;
-    opacity: 0.75;
-    margin-top: 2px;
-  }
-
-  .cabecalho-numero {
-    background: #e8a000;
-    color: #1a1a1a;
-    width: 140px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 10px;
-    flex-shrink: 0;
-  }
-
-  .cabecalho-numero .label {
-    font-size: 9px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    font-weight: 700;
-    margin-bottom: 4px;
-  }
-
-  .cabecalho-numero .numero {
-    font-family: 'Courier Prime', monospace;
-    font-size: 13px;
-    font-weight: 700;
+  .warn-box {
+    border: 1.5px dashed var(--red);
+    background: #FFF0F0;
     text-align: center;
-    line-height: 1.3;
-  }
-
-  /* ── FAIXA DE STATUS ── */
-  .faixa-status {
-    background: #f5f5f5;
-    border-top: 3px solid #e8a000;
-    border-bottom: 1px solid #ddd;
-    padding: 6px 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    padding: 6px;
     font-size: 11px;
-    color: #555;
-  }
-
-  .faixa-status .status-badge {
-    background: #d32f2f;
-    color: white;
-    padding: 2px 10px;
-    border-radius: 2px;
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-  }
-
-  .faixa-status .status-badge.simulado {
-    background: #f57c00;
-  }
-
-  /* ── CORPO ── */
-  .corpo {
-    padding: 20px 24px;
-  }
-
-  .secao {
-    margin-bottom: 16px;
-  }
-
-  .secao-titulo {
-    font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    color: #1a3a6b;
-    font-weight: 700;
-    border-bottom: 2px solid #1a3a6b;
-    padding-bottom: 4px;
+    font-weight: 600;
+    color: var(--red);
     margin-bottom: 10px;
   }
 
-  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
-  .grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 10px; }
+  /* ── Seções ── */
+  .section-title {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--dark);
+    border-bottom: 0.5px solid var(--dark);
+    padding-bottom: 3px;
+    margin: 10px 0 6px;
+  }
 
-  .campo {
+  .field-grid {
+    display: grid;
+    gap: 4px 12px;
+    margin-bottom: 4px;
+  }
+  .field-grid.cols-2 { grid-template-columns: 1fr 1fr; }
+  .field-grid.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+  .field-grid.cols-4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
+
+  .field label {
+    display: block;
+    font-size: 8.5px;
+    color: var(--gray);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 1px;
+  }
+  .field span {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--dark);
+  }
+
+  /* ── Tabela de serviços ── */
+  .svc-table { width: 100%; border-collapse: collapse; font-size: 11.5px; margin-bottom: 4px; }
+  .svc-table thead tr { background: var(--dark); color: white; }
+  .svc-table thead th { padding: 5px 8px; text-align: left; font-size: 10px; letter-spacing: 0.5px; }
+  .svc-table thead th:last-child { text-align: right; }
+  .svc-table tbody tr:nth-child(odd) { background: var(--light); }
+  .svc-table tbody tr:nth-child(even) { background: white; }
+  .svc-table tbody td { padding: 5px 8px; }
+  .svc-table tbody td:last-child { text-align: right; font-weight: 600; }
+  .total-row {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 4px;
+  }
+  .total-box {
+    background: var(--dark);
+    color: white;
+    padding: 6px 16px;
+    font-size: 14px;
+    font-weight: 700;
+    font-family: 'Source Serif 4', serif;
+  }
+  .total-box span { font-size: 10px; font-weight: 400; margin-right: 6px; opacity: 0.8; }
+
+  /* ── Vencimento ── */
+  .venc-box {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #FFFBF0;
+    border: 0.5px solid var(--gold);
+    padding: 10px 14px;
+    margin: 10px 0;
+  }
+  .venc-cal {
+    background: var(--gold);
+    color: white;
+    font-weight: 700;
+    font-size: 18px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Source Serif 4', serif;
+    flex-shrink: 0;
+  }
+  .venc-label { font-size: 9px; color: var(--gray); text-transform: uppercase; letter-spacing: 1px; }
+  .venc-date { font-size: 16px; font-weight: 700; color: var(--gold); font-family: 'Source Serif 4', serif; }
+  .venc-note { font-size: 10px; color: var(--gray); margin-top: 1px; }
+
+  /* ── Código de barras ── */
+  .barcode-box {
+    background: var(--light);
+    border: 0.5px solid var(--lgray);
+    padding: 10px 14px;
+    margin-bottom: 12px;
+  }
+  .barcode-label { font-size: 9px; color: var(--gray); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+  .barcode-code {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    color: var(--dark);
+    text-align: center;
+    padding: 4px 0;
+  }
+  .barcode-img { text-align: center; margin-top: 6px; }
+  .barcode-lines {
+    display: inline-flex;
+    gap: 1px;
+    height: 40px;
+    align-items: flex-end;
+  }
+  .barcode-lines .b { background: var(--dark); width: 2px; }
+  .barcode-lines .b.t { height: 100%; }
+  .barcode-lines .b.m { height: 70%; }
+  .barcode-lines .b.s { height: 50%; }
+
+  /* ══════════════════════════════════
+     BLOCO PIX
+  ══════════════════════════════════ */
+  .pix-separator { height: 2px; background: var(--pix); margin: 4px 0; }
+
+  .pix-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--pix-lt);
+    padding: 8px 14px;
+    border-bottom: 1px solid #b2e8e3;
+  }
+  .pix-logo-area { display: flex; align-items: center; gap: 8px; }
+  .pix-diamond {
+    width: 28px; height: 28px;
+    background: var(--pix);
+    transform: rotate(45deg);
+    border-radius: 3px;
+    flex-shrink: 0;
+  }
+  .pix-diamond-inner {
+    width: 14px; height: 14px;
+    background: white;
+    transform: rotate(0deg);
+    border-radius: 2px;
+    position: absolute;
+    top: 50%; left: 50%;
+    margin: -7px 0 0 -7px;
+  }
+  .pix-logo-wrap { position: relative; width: 28px; height: 28px; }
+  .pix-title-text {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--pix-dk);
+    font-family: 'Source Serif 4', serif;
+  }
+  .pix-header-sub { font-size: 10px; color: var(--gray); }
+  .pix-instant { font-size: 10px; color: var(--gray); text-align: right; }
+
+  .pix-body {
+    background: var(--pix-lt);
+    display: flex;
+    gap: 0;
+    border-top: none;
+  }
+
+  .pix-qr-col {
+    width: 160px;
+    flex-shrink: 0;
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+    border-right: 1px solid #b2e8e3;
   }
-
-  .campo label {
-    font-size: 9px;
-    text-transform: uppercase;
-    letter-spacing: 0.8px;
-    color: #888;
-    margin-bottom: 2px;
+  .pix-qr-img {
+    width: 130px;
+    height: 130px;
+    border: 2px solid var(--pix);
+    border-radius: 4px;
+    padding: 4px;
+    background: white;
   }
-
-  .campo .valor {
-    font-size: 13px;
-    font-weight: 600;
-    color: #1a1a1a;
-    border-bottom: 1px solid #e0e0e0;
-    padding-bottom: 3px;
-    min-height: 20px;
-  }
-
-  .campo .valor.mono {
-    font-family: 'Courier Prime', monospace;
-    font-size: 12px;
-  }
-
-  /* ── TABELA DE SERVIÇO ── */
-  .tabela-servico {
+  .pix-qr-img img {
     width: 100%;
-    border-collapse: collapse;
-    font-size: 12px;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+  .pix-qr-label {
+    font-size: 9px;
+    color: var(--gray);
+    text-align: center;
     margin-top: 6px;
   }
 
-  .tabela-servico thead tr {
-    background: #1a3a6b;
-    color: white;
+  .pix-data-col {
+    flex: 1;
+    padding: 12px 14px;
   }
 
-  .tabela-servico th {
-    padding: 6px 10px;
-    text-align: left;
-    font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: 0.8px;
-    font-weight: 600;
-  }
-
-  .tabela-servico td {
-    padding: 7px 10px;
-    border-bottom: 1px solid #eee;
-  }
-
-  .tabela-servico tr:nth-child(even) td {
-    background: #fafafa;
-  }
-
-  .tabela-servico .valor-col {
-    text-align: right;
-    font-weight: 700;
-    font-family: 'Courier Prime', monospace;
-  }
-
-  /* ── TOTAL ── */
-  .total-box {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 8px;
-  }
-
-  .total-inner {
-    background: #1a3a6b;
-    color: white;
-    padding: 8px 20px;
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    border-radius: 2px;
-  }
-
-  .total-inner .total-label {
+  .pix-data-grid {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 3px 10px;
+    margin-bottom: 10px;
     font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    opacity: 0.8;
   }
+  .pix-data-grid .pk { color: var(--gray); font-size: 10px; }
+  .pix-data-grid .pv { font-weight: 600; color: var(--dark); }
+  .pix-data-grid .pv.valor { font-size: 15px; font-weight: 700; color: var(--pix-dk); }
 
-  .total-inner .total-valor {
-    font-family: 'Courier Prime', monospace;
-    font-size: 22px;
-    font-weight: 700;
-    color: #e8a000;
-  }
-
-  /* ── VENCIMENTO ── */
-  .vencimento-box {
-    background: #fff8e1;
-    border: 1px solid #e8a000;
-    border-left: 4px solid #e8a000;
-    padding: 10px 14px;
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    margin-bottom: 16px;
-    border-radius: 0 2px 2px 0;
-  }
-
-  .vencimento-box .icon { font-size: 24px; }
-
-  .vencimento-box .venc-info .venc-label {
-    font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: #888;
-  }
-
-  .vencimento-box .venc-info .venc-data {
-    font-size: 16px;
-    font-weight: 700;
-    color: #c77b00;
-  }
-
-  .vencimento-box .venc-info .venc-obs {
-    font-size: 10px;
-    color: #777;
-    margin-top: 1px;
-  }
-
-  /* ── CÓDIGO DE BARRAS ── */
-  .barcode-section {
-    background: #f9f9f9;
-    border: 1px solid #ddd;
-    padding: 14px 20px;
-    text-align: center;
-    margin-bottom: 16px;
-  }
-
-  .barcode-section .bc-label {
-    font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: #888;
-    margin-bottom: 6px;
-  }
-
-  .barcode-numero {
-    font-family: 'Courier Prime', monospace;
-    font-size: 14px;
-    letter-spacing: 3px;
-    color: #1a1a1a;
-    font-weight: 700;
-    margin-bottom: 8px;
-  }
-
-  /* SVG barcode simulado */
-  .barcode-svg {
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-    gap: 1px;
-    height: 50px;
-    margin: 0 auto;
-    width: 400px;
-  }
-
-  .bar {
-    background: #1a1a1a;
-    width: 2px;
-  }
-
-  /* ── OBSERVAÇÕES ── */
-  .obs-box {
-    background: #e8f0fb;
-    border: 1px solid #b0c4de;
-    border-left: 4px solid #1a3a6b;
-    padding: 10px 14px;
-    font-size: 11px;
-    color: #333;
-    line-height: 1.6;
-    border-radius: 0 2px 2px 0;
-    margin-bottom: 16px;
-  }
-
-  .obs-box strong { color: #1a3a6b; }
-
-  /* ── SIMULADO WATERMARK ── */
-  .watermark {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) rotate(-35deg);
-    font-size: 80px;
-    font-weight: 900;
-    color: rgba(255, 100, 0, 0.07);
-    text-transform: uppercase;
-    letter-spacing: 10px;
-    pointer-events: none;
-    white-space: nowrap;
-    z-index: 0;
-  }
-
-  /* ── RODAPÉ ── */
-  .rodape {
-    background: #f5f5f5;
-    border-top: 2px solid #ddd;
-    padding: 10px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  .pix-copy-label {
     font-size: 9px;
-    color: #999;
+    color: var(--gray);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+  }
+  .pix-copy-box {
+    background: white;
+    border: 1px solid #b2e8e3;
+    border-radius: 3px;
+    padding: 6px 10px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 8.5px;
+    color: #333;
+    word-break: break-all;
+    line-height: 1.5;
+    max-height: 60px;
+    overflow: hidden;
+  }
+  .pix-hint { font-size: 9px; color: var(--gray); margin-top: 4px; }
+
+  .pix-steps {
+    background: #D4F5F1;
+    border: 0.5px solid var(--pix);
+    padding: 7px 14px;
+    font-size: 10.5px;
+    color: var(--dark);
+    line-height: 1.6;
+  }
+  .pix-steps strong { color: var(--pix-dk); }
+
+  /* ── Instruções ── */
+  .inst-box {
+    background: var(--light);
+    border: 0.5px solid var(--lgray);
+    padding: 8px 14px;
+    font-size: 11px;
+    line-height: 1.6;
+    margin: 10px 0;
+    color: var(--dark);
   }
 
-  .rodape .cartorio-info { font-size: 10px; color: #555; }
-  .rodape .cartorio-info strong { color: #1a3a6b; }
+  /* ── Rodapé ── */
+  .footer-hr { height: 0.5px; background: var(--lgray); margin: 8px 0 4px; }
+  .footer-row { display: flex; justify-content: space-between; font-size: 10px; color: var(--gray); }
+  .footer-row strong { color: var(--dark); }
+  .footer-bottom { text-align: center; font-size: 9px; color: var(--gray); margin-top: 4px; }
 
-  /* ── AVISO SIMULADO ── */
-  .aviso-simulado {
-    background: #fff3e0;
-    border: 2px dashed #f57c00;
-    text-align: center;
-    padding: 8px;
-    font-size: 11px;
-    font-weight: 700;
-    color: #e65100;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    margin: 0 24px 16px;
+  @media print {
+    body { background: white; padding: 0; }
+    .page { box-shadow: none; width: 100%; }
   }
 </style>
 </head>
 <body>
+<div class="page">
 
-<div class="documento">
-
-  <!-- CABEÇALHO -->
-  <div class="cabecalho">
-    <div class="cabecalho-brasao">⚖️</div>
-    <div class="cabecalho-info">
-      <div class="orgao">República Federativa do Brasil · Estado da Bahia</div>
-      <div class="titulo">DAE — Documento de Arrecadação Estadual</div>
-      <div class="subtitulo">Certidão de Registro Civil · Emissão por Intermediação</div>
+  <!-- Cabeçalho -->
+  <div class="header">
+    <div>
+      <div class="header-title">⚖️ DAE — Documento de Arrecadação Estadual</div>
+      <div class="header-sub">Certidão de Registro Civil · Emissão por Intermediação</div>
     </div>
-    <div class="cabecalho-numero">
-      <div class="label">Protocolo</div>
-      <div class="numero" id="protocolo">2026031200847</div>
+    <div class="protocolo-box">
+      <div class="protocolo-label">Protocolo</div>
+      <div class="protocolo-value" id="protocolo">—</div>
     </div>
   </div>
 
-  <!-- FAIXA STATUS -->
-  <div class="faixa-status">
-    <span>Gerado em: <strong id="data-geracao">12/03/2026 às 15:42</strong></span>
-    <span class="status-badge simulado">⚠ Documento Simulado</span>
+  <div class="gold-bar"></div>
+
+  <div class="meta-row">
+    <span>Gerado em: <strong id="gerado-em">—</strong></span>
+    <span class="badge-sim">⚠ DOCUMENTO SIMULADO</span>
     <span>Ref.: Solicitação via WhatsApp · Cartório de Candeias</span>
   </div>
 
-  <div class="corpo">
+  <div class="warn-box">🔔 ESTE É UM DOCUMENTO DE DEMONSTRAÇÃO — NÃO TEM VALIDADE FISCAL</div>
 
-    <!-- AVISO SIMULADO -->
-    <div class="aviso-simulado">
-      🔔 Este é um documento de demonstração — não tem validade fiscal
-    </div>
+  <!-- Dados do Solicitante -->
+  <div class="section-title">Dados do Solicitante</div>
+  <div class="field-grid cols-2">
+    <div class="field"><label>Nome Completo do Solicitante</label><span id="nome-cliente">—</span></div>
+    <div class="field"><label>Telefone (WhatsApp)</label><span id="telefone">—</span></div>
+  </div>
 
-    <!-- DADOS DO SOLICITANTE -->
-    <div class="secao">
-      <div class="secao-titulo">Dados do Solicitante</div>
-      <div class="grid-2">
-        <div class="campo">
-          <label>Nome Completo do Solicitante</label>
-          <div class="valor" id="nome-solicitante">MARIA JOSÉ DA SILVA</div>
-        </div>
-        <div class="campo">
-          <label>Telefone (WhatsApp)</label>
-          <div class="valor" id="telefone">+55 (71) 99999-0000</div>
-        </div>
-      </div>
-    </div>
+  <!-- Dados da Certidão -->
+  <div class="section-title">Dados da Certidão Solicitada</div>
+  <div class="field-grid cols-2">
+    <div class="field"><label>Nome Registrado na Certidão</label><span id="nome-registrado">—</span></div>
+    <div class="field"><label>Data de Nascimento</label><span id="data-evento">—</span></div>
+  </div>
+  <div class="field-grid cols-2">
+    <div class="field"><label>Nome da Mãe</label><span id="nome-mae">—</span></div>
+    <div class="field"><label>Nome do Pai</label><span id="nome-pai">—</span></div>
+  </div>
+  <div class="field-grid cols-4">
+    <div class="field"><label>Estado do Cartório</label><span id="estado">—</span></div>
+    <div class="field"><label>Município</label><span id="cidade">—</span></div>
+    <div class="field"><label>Livro</label><span id="livro">N/A</span></div>
+    <div class="field"><label>Folha / Termo</label><span id="folha-termo">N/A / N/A</span></div>
+  </div>
 
-    <!-- DADOS DA CERTIDÃO -->
-    <div class="secao">
-      <div class="secao-titulo">Dados da Certidão Solicitada</div>
-      <div class="grid-2" style="margin-bottom:10px">
-        <div class="campo">
-          <label>Nome Registrado na Certidão</label>
-          <div class="valor" id="nome-registrado">JOÃO PEDRO DA SILVA</div>
-        </div>
-        <div class="campo">
-          <label>Data de Nascimento</label>
-          <div class="valor" id="data-nascimento">15/06/1985</div>
-        </div>
-      </div>
-      <div class="grid-2" style="margin-bottom:10px">
-        <div class="campo">
-          <label>Nome da Mãe</label>
-          <div class="valor" id="nome-mae">MARIA JOSÉ DA SILVA</div>
-        </div>
-        <div class="campo">
-          <label>Nome do Pai</label>
-          <div class="valor" id="nome-pai">ANTÔNIO CARLOS DA SILVA</div>
-        </div>
-      </div>
-      <div class="grid-4">
-        <div class="campo">
-          <label>Estado do Cartório</label>
-          <div class="valor" id="estado">Bahia (BA)</div>
-        </div>
-        <div class="campo">
-          <label>Município</label>
-          <div class="valor" id="cidade">Candeias</div>
-        </div>
-        <div class="campo">
-          <label>Livro</label>
-          <div class="valor mono" id="livro">023</div>
-        </div>
-        <div class="campo">
-          <label>Folha / Termo</label>
-          <div class="valor mono" id="folha-termo">045 / 0892</div>
-        </div>
-      </div>
-    </div>
+  <!-- Serviços -->
+  <div class="section-title">Serviços e Emolumentos</div>
+  <table class="svc-table">
+    <thead>
+      <tr>
+        <th>Cód.</th>
+        <th>Descrição do Serviço</th>
+        <th>Formato</th>
+        <th>Valor (R$)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>RC-001</td>
+        <td id="svc-desc">Certidão de Nascimento · 2ª Via</td>
+        <td>Eletrônico</td>
+        <td id="svc-valor">—</td>
+      </tr>
+      <tr>
+        <td>SV-002</td>
+        <td>Intermediação e Entrega Digital</td>
+        <td>—</td>
+        <td>0,00</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="total-row">
+    <div class="total-box"><span>TOTAL A PAGAR</span>R$ <span id="total-valor">—</span></div>
+  </div>
 
-    <!-- SERVIÇOS -->
-    <div class="secao">
-      <div class="secao-titulo">Serviços e Emolumentos</div>
-      <table class="tabela-servico">
-        <thead>
-          <tr>
-            <th>Cód.</th>
-            <th>Descrição do Serviço</th>
-            <th>Formato</th>
-            <th style="text-align:right">Valor (R$)</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="mono">RC-001</td>
-            <td>Certidão de Nascimento · 2ª Via</td>
-            <td>Eletrônico</td>
-            <td class="valor-col" id="valor-certidao">--</td>
-          </tr>
-          <tr>
-            <td class="mono">SV-002</td>
-            <td>Intermediação e Entrega Digital</td>
-            <td>—</td>
-            <td class="valor-col">0,00</td>
-          </tr>
-        </tbody>
-      </table>
-      <div class="total-box">
-        <div class="total-inner">
-          <span class="total-label">Total a Pagar</span>
-          <span class="total-valor">R$ <span id="total">--</span></span>
-        </div>
-      </div>
-    </div>
-
-    <!-- VENCIMENTO -->
-    <div class="vencimento-box">
-      <div class="icon">📅</div>
-      <div class="venc-info">
-        <div class="venc-label">Vencimento</div>
-        <div class="venc-data" id="vencimento">17/03/2026</div>
-        <div class="venc-obs">Após o vencimento, um novo DAE deverá ser gerado</div>
-      </div>
-    </div>
-
-    <!-- CÓDIGO DE BARRAS -->
-    <div class="barcode-section">
-      <div class="bc-label">Linha Digitável / Código de Barras</div>
-      <div class="barcode-numero" id="linha-digitavel">29690.00053 40200.326012 83070.100007 4 00000008990</div>
-      <div class="barcode-svg" id="barcode"></div>
-    </div>
-
-    <!-- OBSERVAÇÕES -->
-    <div class="obs-box">
-      <strong>Instruções de Pagamento:</strong> Este DAE pode ser pago em qualquer banco, lotérica ou aplicativo bancário.
-      Após a confirmação do pagamento (até 2 dias úteis), a certidão será enviada para o WhatsApp cadastrado.
-      <br><br>
-      <strong>Dúvidas?</strong> Entre em contato pelo WhatsApp do Cartório de Candeias: <strong>(71) 99999-9999</strong>
-    </div>
-
-  </div><!-- fim .corpo -->
-
-  <!-- RODAPÉ -->
-  <div class="rodape">
-    <div class="cartorio-info">
-      <strong>Cartório de Registro Civil de Candeias</strong> · Candeias/BA<br>
-      Atendimento automatizado via WhatsApp · Sistema Antonella
-    </div>
+  <!-- Vencimento -->
+  <div class="venc-box">
+    <div class="venc-cal" id="venc-dia">—</div>
     <div>
-      Protocolo: <strong id="protocolo-rodape">2026031200847</strong><br>
-      Gerado automaticamente em 12/03/2026
+      <div class="venc-label">Vencimento</div>
+      <div class="venc-date" id="venc-data">—</div>
+      <div class="venc-note">Após o vencimento, um novo DAE deverá ser gerado</div>
     </div>
   </div>
 
-</div><!-- fim .documento -->
+  <!-- Código de barras -->
+  <div class="barcode-box">
+    <div class="barcode-label">Linha Digitável / Código de Barras</div>
+    <div class="barcode-code">29690.00053 40200.326012 83070.100007 4 00000000008990</div>
+    <div class="barcode-img">
+      <div class="barcode-lines" id="barcode-lines"></div>
+    </div>
+  </div>
+
+  <!-- ══════════════ BLOCO PIX ══════════════ -->
+  <div class="pix-separator"></div>
+
+  <div class="pix-header">
+    <div class="pix-logo-area">
+      <div class="pix-logo-wrap">
+        <div class="pix-diamond"></div>
+        <div class="pix-diamond-inner"></div>
+      </div>
+      <div>
+        <div class="pix-title-text">Pagamento via Pix</div>
+        <div class="pix-header-sub">Transferência instantânea · disponível 24h</div>
+      </div>
+    </div>
+    <div class="pix-instant">Pague em segundos com qualquer banco</div>
+  </div>
+
+  <div class="pix-body">
+    <!-- QR Code -->
+    <div class="pix-qr-col">
+      <div class="pix-qr-img" id="pix-qr-wrapper">
+        <!-- QR base64 inserido dinamicamente -->
+        <img id="pix-qr-img" src="" alt="QR Code Pix" style="display:none"/>
+        <canvas id="pix-qr-placeholder" width="120" height="120"></canvas>
+      </div>
+      <div class="pix-qr-label">Escaneie com o app do banco</div>
+    </div>
+
+    <!-- Dados + Copia e Cola -->
+    <div class="pix-data-col">
+      <div class="pix-copy-label">Dados do Beneficiário</div>
+      <div class="pix-data-grid">
+        <span class="pk">Nome:</span>   <span class="pv">Cartório de Candeias</span>
+        <span class="pk">Chave:</span>  <span class="pv">71999999999</span>
+        <span class="pk">Cidade:</span> <span class="pv">Candeias / BA</span>
+        <span class="pk">Valor:</span>  <span class="pv valor">R$ <span id="pix-valor">—</span></span>
+        <span class="pk">ID:</span>     <span class="pv" id="pix-txid" style="font-size:10px;font-family:'IBM Plex Mono',monospace">—</span>
+      </div>
+
+      <div class="pix-copy-label">Pix Copia e Cola</div>
+      <div class="pix-copy-box" id="pix-copy-code">—</div>
+      <div class="pix-hint">Copie o código acima e cole no app do seu banco em <strong>Pix → Copia e Cola</strong></div>
+    </div>
+  </div>
+
+  <div class="pix-steps">
+    ① Abra o app do seu banco &nbsp;·&nbsp;
+    ② Escolha <strong>Pix</strong> &nbsp;·&nbsp;
+    ③ Escaneie o QR Code <strong>ou</strong> use <strong>Copia e Cola</strong> &nbsp;·&nbsp;
+    ④ Confirme o valor de <strong>R$ <span id="pix-steps-valor">—</span></strong> &nbsp;·&nbsp;
+    ⑤ Envie o comprovante para o WhatsApp do cartório após o pagamento
+  </div>
+
+  <div class="pix-separator" style="margin-top:4px"></div>
+  <!-- ══════════════ FIM BLOCO PIX ══════════════ -->
+
+  <!-- Instruções -->
+  <div class="inst-box">
+    <strong>Instruções de Pagamento:</strong> Este DAE pode ser pago em qualquer banco, lotérica ou aplicativo bancário.
+    Após a confirmação do pagamento (até 2 dias úteis), a certidão será enviada para o WhatsApp cadastrado.<br><br>
+    <strong>Dúvidas?</strong> Entre em contato pelo WhatsApp do Cartório de Candeias: <strong>(71) 99999-9999</strong>
+  </div>
+
+  <!-- Rodapé -->
+  <div class="footer-hr"></div>
+  <div class="footer-row">
+    <span><strong>Cartório de Registro Civil de Candeias</strong> · Candeias/BA<br>
+    Atendimento automatizado via WhatsApp · Sistema Antonella</span>
+    <span style="text-align:right">Protocolo: <strong id="footer-protocolo">—</strong><br>
+    Gerado automaticamente em <span id="footer-data">—</span></span>
+  </div>
+  <div class="footer-bottom">
+    REPÚBLICA FEDERATIVA DO BRASIL · ESTADO DA BAHIA · Certidão de Registro Civil · Emissão por Intermediação
+  </div>
+
+</div>
 
 <script>
-// Gera código de barras simulado (barras aleatórias mas realistas)
+// ── Utilitários ─────────────────────────────────────────
+function getParam(key) {
+  const url = new URLSearchParams(window.location.search);
+  const val = url.get(key);
+  return val ? decodeURIComponent(val) : '';
+}
+
+function gerarProtocolo() {
+  const now = new Date();
+  return now.getFullYear().toString() +
+    String(now.getMonth()+1).padStart(2,'0') +
+    String(now.getDate()).padStart(2,'0') +
+    String(Math.floor(Math.random()*9000000+1000000));
+}
+
+function gerarVencimento() {
+  const d = new Date();
+  d.setDate(d.getDate() + 5);
+  const dia = String(d.getDate()).padStart(2,'0');
+  const mes = String(d.getMonth()+1).padStart(2,'0');
+  const ano = d.getFullYear();
+  return { dia, full: `${dia}/${mes}/${ano}` };
+}
+
+function formatarDataHora(d) {
+  return d.toLocaleDateString('pt-BR') + ', ' +
+         d.toLocaleTimeString('pt-BR', {hour:'2-digit',minute:'2-digit',second:'2-digit'});
+}
+
 function gerarBarcode() {
-  const container = document.getElementById('barcode');
-  const alturas = [30,50,30,50,40,50,30,50,40,30,50,30,40,50,30,50,30,40,50,30,
-                   50,40,30,50,30,50,40,30,50,30,50,40,30,50,30,40,50,30,50,40,
-                   30,50,30,50,40,30,50,30,50,40,30,50,30,40,50,30,50,40,30,50,
-                   30,50,40,30,50,30,50,40,30,50,30,40,50,30,50,30,50,40,30,50,
-                   30,50,40,30,50,30,40,50,30,50,30,50,40,30,50,30,50,40,30,50];
-  alturas.forEach(h => {
-    const bar = document.createElement('div');
-    bar.className = 'bar';
-    bar.style.height = h + 'px';
-    container.appendChild(bar);
+  const lines = document.getElementById('barcode-lines');
+  if (!lines) return;
+  const types = ['t','m','s','t','m','t','s','m','t','t','s','m','t','s','t'];
+  for (let i = 0; i < 60; i++) {
+    const b = document.createElement('div');
+    b.className = 'b ' + types[i % types.length];
+    b.style.width = (i % 3 === 0) ? '3px' : '2px';
+    lines.appendChild(b);
+  }
+}
+
+// ── Preencher campos ────────────────────────────────────
+function preencher() {
+  const now     = new Date();
+  const proto   = gerarProtocolo();
+  const venc    = gerarVencimento();
+  const valor   = getParam('valor') || '42,30';
+  const valorFmt = valor.replace('.',',');
+
+  // Protocolo
+  document.getElementById('protocolo').textContent       = proto;
+  document.getElementById('footer-protocolo').textContent = proto;
+  document.getElementById('pix-txid').textContent        = 'CARTORIO' + proto;
+
+  // Datas
+  document.getElementById('gerado-em').textContent  = formatarDataHora(now);
+  document.getElementById('footer-data').textContent = now.toLocaleDateString('pt-BR');
+  document.getElementById('venc-dia').textContent   = venc.dia;
+  document.getElementById('venc-data').textContent  = venc.full;
+
+  // Solicitante
+  document.getElementById('nome-cliente').textContent = getParam('nome_cliente') || '—';
+  document.getElementById('telefone').textContent     = getParam('telefone')     || '—';
+
+  // Certidão
+  document.getElementById('nome-registrado').textContent = getParam('nome_registrado') || '—';
+  document.getElementById('data-evento').textContent     = getParam('data_evento')     || '—';
+  document.getElementById('nome-mae').textContent        = getParam('nome_mae')        || '—';
+  document.getElementById('nome-pai').textContent        = getParam('nome_pai')        || '—';
+  document.getElementById('estado').textContent          = getParam('estado_registro') || '—';
+  document.getElementById('cidade').textContent          = getParam('cidade_cartorio') || '—';
+
+  const livro = getParam('livro')  || 'N/A';
+  const folha = getParam('folha')  || 'N/A';
+  const termo = getParam('termo')  || 'N/A';
+  document.getElementById('livro').textContent      = livro;
+  document.getElementById('folha-termo').textContent = folha + ' / ' + termo;
+
+  // Valores
+  document.getElementById('svc-valor').textContent   = valorFmt;
+  document.getElementById('total-valor').textContent  = valorFmt;
+  document.getElementById('pix-valor').textContent    = valorFmt;
+  document.getElementById('pix-steps-valor').textContent = valorFmt;
+
+  // ── QR Code Pix ──
+  const pixQrBase64 = getParam('pix_qr');
+  const pixCode     = getParam('pix_code');
+
+  if (pixQrBase64) {
+    const img = document.getElementById('pix-qr-img');
+    const canvas = document.getElementById('pix-qr-placeholder');
+    // Detecta se já tem prefixo data URI
+    const src = pixQrBase64.startsWith('data:') ? pixQrBase64 : 'data:image/png;base64,' + pixQrBase64;
+    img.src = src;
+    img.style.display = 'block';
+    if (canvas) canvas.style.display = 'none';
+  } else {
+    // QR placeholder desenhado em canvas
+    desenharQRPlaceholder();
+  }
+
+  // ── Código Pix Copia e Cola ──
+  if (pixCode) {
+    document.getElementById('pix-copy-code').textContent = pixCode;
+  }
+
+  gerarBarcode();
+}
+
+function desenharQRPlaceholder() {
+  const canvas = document.getElementById('pix-qr-placeholder');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const s = 120;
+  ctx.fillStyle = 'white';
+  ctx.fillRect(0, 0, s, s);
+
+  const cell = s / 21;
+  ctx.fillStyle = '#1A2340';
+
+  // Finder patterns
+  [[0,0],[14,0],[0,14]].forEach(([ox,oy]) => {
+    ctx.fillRect(ox*cell, oy*cell, 7*cell, 7*cell);
+    ctx.fillStyle = 'white';
+    ctx.fillRect((ox+1)*cell, (oy+1)*cell, 5*cell, 5*cell);
+    ctx.fillStyle = '#1A2340';
+    ctx.fillRect((ox+2)*cell, (oy+2)*cell, 3*cell, 3*cell);
   });
+
+  // Padrão de dados simulado
+  const seed = [[8,2],[10,2],[12,2],[8,4],[9,5],[11,4],[8,7],[10,7],[12,6],
+                [7,8],[9,8],[11,9],[8,10],[10,11],[12,10],[7,12],[9,13],
+                [11,12],[14,8],[16,8],[15,10],[17,10],[14,12],[16,13]];
+  seed.forEach(([c,r]) => { ctx.fillRect(c*cell, r*cell, cell-0.5, cell-0.5); });
 }
 
-// Preenche dados passados via URL params (para uso no n8n)
-function preencherDados() {
-  const params = new URLSearchParams(window.location.search);
-  const set = (id, val) => { if (val && document.getElementById(id)) document.getElementById(id).textContent = val; };
-
-  set('nome-registrado', params.get('nome_registrado'));
-  set('nome-mae', params.get('nome_mae'));
-  set('nome-pai', params.get('nome_pai'));
-  set('data-nascimento', params.get('data_evento'));
-  set('estado', params.get('estado_registro'));
-  set('cidade', params.get('cidade_cartorio'));
-  set('livro', params.get('livro'));
-  set('folha-termo', (params.get('folha') || '') + ' / ' + (params.get('termo') || ''));
-  set('telefone', params.get('telefone'));
-  set('nome-solicitante', params.get('nome_cliente'));
-  set('valor-certidao', params.get('valor') || '0,00');
-  set('total', params.get('valor') || '0,00');
-
-  const protocolo = '2026' + Date.now().toString().slice(-8);
-  set('protocolo', protocolo);
-  set('protocolo-rodape', protocolo);
-
-  // Vencimento = hoje + 5 dias
-  const venc = new Date();
-  venc.setDate(venc.getDate() + 5);
-  set('vencimento', venc.toLocaleDateString('pt-BR'));
-
-  // Data geração
-  set('data-geracao', new Date().toLocaleString('pt-BR'));
-}
-
-gerarBarcode();
-preencherDados();
+preencher();
 </script>
 </body>
 </html>
